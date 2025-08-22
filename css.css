@@ -1,0 +1,105 @@
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+
+      /* themed background */
+      background: url('') no-repeat center center/cover;
+    }
+
+    /* SBI style header */
+    header {
+      background: rgba(10, 61, 145, 0.95);
+      color: white;
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .container {
+      background: rgba(255,255,255,0.97);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      width: 420px;
+      margin-top: 90px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #0a3d91;
+    }
+
+    input, button {
+      margin: 8px 0;
+      padding: 10px;
+      width: 90%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      background: #0a3d91;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #072c6b;
+    }
+
+    .section {
+      margin-top: 15px;
+      padding: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    .balance {
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: center;
+    }
+
+    th {
+      background: #0a3d91;
+      color: white;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      .container {
+        width: 95%;
+      }
+      header {
+        font-size: 18px;
+        padding: 10px;
+      }
+    }
+  

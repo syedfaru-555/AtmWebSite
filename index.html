@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Syed Bank</title>
+  <link rel="stylesheet" href="css.css">
+  <script>
+    let accountHolder = "Syed Faruk";
+    let balance = 5000;
+    const pin = 1234;
+    let transactions = [];
+
+    function login() {
+      let enteredPin = document.getElementById("pin").value;
+      if (enteredPin == pin) {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("bank-section").style.display = "block";
+        document.getElementById("holder").innerText = accountHolder;
+        updateBalance();
+      } else {
+        alert("❌ Invalid Pin");
+      }
+    }
+
+    function deposit() {
+      let amount = parseFloat(document.getElementById("depositAmt").value);
+      if (amount > 0) {
+        balance += amount;
+        transactions.push({ type: "Deposit", amount: amount, date: new Date().toLocaleString() });
+        alert("✅ Deposited Successfully: ₹" + amount);
+        updateBalance();
+        updateTransactions();
+      } else {
+        alert("❌ Invalid Deposit Amount");
+      }
+      document.getElementById("depositAmt").value = "";
+    }
+
+    function withdraw() {
+      let amount = parseFloat(document.getElementById("withdrawAmt").value);
+      if (amount > 0 && amount <= balance) {
+        balance -= amount;
+        transactions.push({ type: "Withdrawal", amount: amount, date: new Date().toLocaleString() });
+        alert("✅ Withdrawal Successful: ₹" + amount);
+        updateBalance();
+        updateTransactions();
+      } else {
+        alert("❌ Invalid or Insufficient Balance");
+      }
+      document.getElementById("withdrawAmt").value = "";
+    }
+
+    function updateBalance() {
+      document.getElementById("balance").innerText = balance.toFixed(2);
+    }
+
+    function updateTransactions() {
+      let history = document.getElementById("transactionHistory");
+      history.innerHTML = "";
+      transactions.slice().reverse().forEach(t => {
+        let row = `<tr>
+                     <td>${t.date}</td>
+                     <td>${t.type}</td>
+                     <td>₹${t.amount}</td>
+                   </tr>`;
+        history.innerHTML += row;
+      });
+    }
+
+    // ⬇️ New function to download transactions as CSV
+    function downloadTransactions() {
+      if (transactions.length === 0) {
+        alert("⚠️ No transactions to download!");
+        return;
+      }
+
+      let csv = "Date & Time,Type,Amount\n";
+      transactions.forEach(t => {
+        csv += `${t.date},${t.type},₹${t.amount}\n`;
+      });
+
+      let blob = new Blob([csv], { type: 'text/csv' });
+      let link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "SyedBank_Transactions.csv";
+      link.click();
+    }
+  </script>
+
+</head>
+<body>
+  <header>🏦 Syed Bank</header>
+
+  <div class="container">
+    <!-- Login Section -->
+    <div id="login-section">
+      <h2>🔑 Enter PIN</h2>
+      <input type="password" id="pin" placeholder="Enter 4-digit PIN">
+      <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Banking Section -->
+    <div id="bank-section" style="display:none;">
+      <h2>Welcome, <span id="holder"></span></h2>
+      <p class="balance">💰 Current Balance: ₹ <span id="balance">5000</span></p>
+
+      <div class="section">
+        <h3>➕ Deposit</h3>
+        <input type="number" id="depositAmt" placeholder="Enter deposit amount">
+        <button onclick="deposit()">Deposit</button>
+      </div>
+
+      <div class="section">
+        <h3>➖ Withdraw</h3>
+        <input type="number" id="withdrawAmt" placeholder="Enter withdraw amount">
+        <button onclick="withdraw()">Withdraw</button>
+      </div>
+
+      <div class="section">
+        <h3>📜 Transaction History</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Type</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody id="transactionHistory"></tbody>
+        </table>
+        <br>
+        <button onclick="downloadTransactions()">⬇️ Download Your Transactions</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
